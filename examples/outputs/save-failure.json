@@ -1,0 +1,20 @@
+{
+  "task_status": "failed",
+  "material_id": "M05",
+  "review_status": "pass",
+  "risk_reasons": [],
+  "missing_fields": [],
+  "requested_slot": "2026-11-01T21:00:00+08:00",
+  "suggested_slot": "2026-11-01T21:00:00+08:00",
+  "pending_items": [],
+  "draft_save": {
+    "status": "failed",
+    "draft_id": null,
+    "message": "draft store failure was injected for this run",
+    "error_code": "save_failed"
+  },
+  "published": false,
+  "completion_reason": "The draft store reported a failure, so completion cannot be claimed.",
+  "steps_used": 5,
+  "step_limit": 8
+}

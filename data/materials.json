@@ -1,0 +1,48 @@
+{
+  "materials": [
+    {
+      "material_id": "M01",
+      "title": "秋季模板功能演示",
+      "duration_seconds": 42,
+      "rights_status": "cleared",
+      "platform": "小影",
+      "content_tags": ["产品演示", "字幕"],
+      "claims": ["支持自动字幕与模板编辑"]
+    },
+    {
+      "material_id": "M02",
+      "title": "用户混剪案例",
+      "duration_seconds": 35,
+      "platform": "小影",
+      "content_tags": ["用户案例"],
+      "claims": ["展示模板剪辑流程"]
+    },
+    {
+      "material_id": "M03",
+      "title": "效率宣传短片",
+      "duration_seconds": 28,
+      "rights_status": "cleared",
+      "platform": "小影",
+      "content_tags": ["产品宣传"],
+      "claims": ["效率提升80%"]
+    },
+    {
+      "material_id": "M04",
+      "title": "节日贴纸教程",
+      "duration_seconds": 31,
+      "rights_status": "cleared",
+      "platform": "小影",
+      "content_tags": ["教程", "贴纸"],
+      "claims": ["演示贴纸编辑步骤"]
+    },
+    {
+      "material_id": "M05",
+      "title": "转场功能教程",
+      "duration_seconds": 39,
+      "rights_status": "cleared",
+      "platform": "小影",
+      "content_tags": ["教程", "转场"],
+      "claims": ["演示转场编辑步骤"]
+    }
+  ]
+}

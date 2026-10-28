@@ -1,0 +1,19 @@
+{
+  "version": "2026-10-01",
+  "required_fields": [
+    "title",
+    "duration_seconds",
+    "rights_status",
+    "platform",
+    "content_tags"
+  ],
+  "prohibited_claims": [
+    "效率提升80%",
+    "永久保证",
+    "全网第一"
+  ],
+  "publication_window": {
+    "start_hour": 9,
+    "end_hour": 22
+  }
+}

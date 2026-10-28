@@ -1,0 +1,6 @@
+{
+  "material_id": "M05",
+  "requested_at": "2026-11-01T21:00:00+08:00",
+  "request_id": "REQ-SAVE-FAIL-001",
+  "simulate_save_failure": true
+}

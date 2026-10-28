@@ -1,0 +1,19 @@
+{
+  "task_status": "completed",
+  "material_id": "M01",
+  "review_status": "pass",
+  "risk_reasons": [],
+  "missing_fields": [],
+  "requested_slot": "2026-11-01T17:00:00+08:00",
+  "suggested_slot": "2026-11-01T17:00:00+08:00",
+  "pending_items": [],
+  "draft_save": {
+    "status": "saved",
+    "draft_id": "DRAFT-97189ECBA0",
+    "message": "saved draft DRAFT-97189ECBA0; no publication action was performed"
+  },
+  "published": false,
+  "completion_reason": "The draft store confirmed the save or idempotent replay.",
+  "steps_used": 5,
+  "step_limit": 8
+}

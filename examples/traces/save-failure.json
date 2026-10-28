@@ -1,0 +1,140 @@
+{
+  "trace_version": "1.0",
+  "run_id": "RUN-AD5834FE86FD",
+  "created_at": "2026-10-28T02:51:39.514441+00:00",
+  "decision_provider": "offline-mock",
+  "mock_boundary": "Offline mock validates orchestration only; it does not prove LLM decision quality.",
+  "input": {
+    "material_id": "M05",
+    "requested_at": "2026-11-01T21:00:00+08:00",
+    "confirmed_slot": null,
+    "request_id": "REQ-SAVE-FAIL-001",
+    "simulate_save_failure": true
+  },
+  "max_steps": 8,
+  "events": [
+    {
+      "step": 1,
+      "decision": {
+        "action": "read_material",
+        "arguments": {
+          "material_id": "M05"
+        },
+        "reason_summary": "Material metadata is needed before review."
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "loaded material M05",
+        "data": {
+          "material": {
+            "material_id": "M05",
+            "title": "转场功能教程",
+            "duration_seconds": 39,
+            "rights_status": "cleared",
+            "platform": "小影",
+            "content_tags": [
+              "教程",
+              "转场"
+            ],
+            "claims": [
+              "演示转场编辑步骤"
+            ]
+          }
+        }
+      },
+      "next_action": "check_rules"
+    },
+    {
+      "step": 2,
+      "decision": {
+        "action": "check_rules",
+        "arguments": {
+          "material_id": "M05"
+        },
+        "reason_summary": "The loaded material must be checked against the active rules."
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "material passed all configured review rules",
+        "data": {
+          "review_status": "pass",
+          "missing_fields": [],
+          "risks": [],
+          "rule_version": "2026-10-01"
+        }
+      },
+      "next_action": "query_slots"
+    },
+    {
+      "step": 3,
+      "decision": {
+        "action": "query_slots",
+        "arguments": {
+          "slot": "2026-11-01T21:00:00+08:00"
+        },
+        "reason_summary": "The requested hard time must be checked for conflicts."
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "slot 2026-11-01T21:00:00+08:00 is available",
+        "data": {
+          "slot": "2026-11-01T21:00:00+08:00",
+          "status": "available",
+          "conflict_with": null,
+          "available_alternatives": []
+        }
+      },
+      "next_action": "save_draft"
+    },
+    {
+      "step": 4,
+      "decision": {
+        "action": "save_draft",
+        "arguments": {
+          "slot": "2026-11-01T21:00:00+08:00"
+        },
+        "reason_summary": "Review passed and the selected slot is available, so a draft can be saved."
+      },
+      "tool_result": {
+        "ok": false,
+        "summary": "draft store failure was injected for this run",
+        "data": {},
+        "error_code": "save_failed"
+      },
+      "next_action": "finish"
+    },
+    {
+      "step": 5,
+      "decision": {
+        "action": "finish",
+        "arguments": {
+          "status": "failed",
+          "reason": "The draft store reported a failure, so completion cannot be claimed."
+        },
+        "reason_summary": "The draft store reported a failure, so completion cannot be claimed."
+      },
+      "tool_result": null,
+      "next_action": "end"
+    }
+  ],
+  "final_output": {
+    "task_status": "failed",
+    "material_id": "M05",
+    "review_status": "pass",
+    "risk_reasons": [],
+    "missing_fields": [],
+    "requested_slot": "2026-11-01T21:00:00+08:00",
+    "suggested_slot": "2026-11-01T21:00:00+08:00",
+    "pending_items": [],
+    "draft_save": {
+      "status": "failed",
+      "draft_id": null,
+      "message": "draft store failure was injected for this run",
+      "error_code": "save_failed"
+    },
+    "published": false,
+    "completion_reason": "The draft store reported a failure, so completion cannot be claimed.",
+    "steps_used": 5,
+    "step_limit": 8
+  }
+}

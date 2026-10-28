@@ -1,0 +1,19 @@
+{
+  "task_status": "completed",
+  "material_id": "M04",
+  "review_status": "pass",
+  "risk_reasons": [],
+  "missing_fields": [],
+  "requested_slot": "2026-11-01T20:00:00+08:00",
+  "suggested_slot": "2026-11-01T20:00:00+08:00",
+  "pending_items": [],
+  "draft_save": {
+    "status": "already_exists",
+    "draft_id": "DRAFT-1D92A620E0",
+    "message": "idempotent replay returned existing draft DRAFT-1D92A620E0"
+  },
+  "published": false,
+  "completion_reason": "The draft store confirmed the save or idempotent replay.",
+  "steps_used": 5,
+  "step_limit": 8
+}

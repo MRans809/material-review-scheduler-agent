@@ -1,0 +1,15 @@
+{
+  "drafts": [
+    {
+      "draft_id": "DRAFT-77166415B3",
+      "fingerprint": "77166415b39a7cb88477f166bed77d447b840cefad42c2a441ab978f733d9e8d",
+      "material_id": "M01",
+      "requested_at": "2026-11-01T18:00:00+08:00",
+      "slot": "2026-11-01T19:00:00+08:00",
+      "confirmation_required": true,
+      "confirmation_evidence": "CONFIRM-CONFLICT-001",
+      "status": "draft",
+      "rule_version": "2026-10-01"
+    }
+  ]
+}
