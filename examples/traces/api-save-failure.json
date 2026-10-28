@@ -1,0 +1,141 @@
+{
+  "trace_version": "1.0",
+  "run_id": "RUN-B5F9A4D9E0FD",
+  "created_at": "2026-10-28T03:36:54.622075+00:00",
+  "decision_provider": "openai-compatible",
+  "model": "qwen3.5-plus",
+  "mock_boundary": null,
+  "input": {
+    "material_id": "M05",
+    "requested_at": "2026-11-01T21:00:00+08:00",
+    "confirmed_slot": null,
+    "request_id": "REQ-SAVE-FAIL-001",
+    "simulate_save_failure": true
+  },
+  "max_steps": 8,
+  "events": [
+    {
+      "step": 1,
+      "decision": {
+        "action": "read_material",
+        "arguments": {
+          "material_id": "M05"
+        },
+        "reason_summary": "Starting review process by reading material M05 content"
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "loaded material M05",
+        "data": {
+          "material": {
+            "material_id": "M05",
+            "title": "转场功能教程",
+            "duration_seconds": 39,
+            "rights_status": "cleared",
+            "platform": "小影",
+            "content_tags": [
+              "教程",
+              "转场"
+            ],
+            "claims": [
+              "演示转场编辑步骤"
+            ]
+          }
+        }
+      },
+      "next_action": "check_rules"
+    },
+    {
+      "step": 2,
+      "decision": {
+        "action": "check_rules",
+        "arguments": {
+          "material_id": "M05"
+        },
+        "reason_summary": "Verifying material compliance with platform rules before slot check."
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "material passed all configured review rules",
+        "data": {
+          "review_status": "pass",
+          "missing_fields": [],
+          "risks": [],
+          "rule_version": "2026-10-01"
+        }
+      },
+      "next_action": "query_slots"
+    },
+    {
+      "step": 3,
+      "decision": {
+        "action": "query_slots",
+        "arguments": {
+          "slot": "2026-11-01T21:00:00+08:00"
+        },
+        "reason_summary": "Checking slot availability for the requested publication time before saving draft"
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "slot 2026-11-01T21:00:00+08:00 is available",
+        "data": {
+          "slot": "2026-11-01T21:00:00+08:00",
+          "status": "available",
+          "conflict_with": null,
+          "available_alternatives": []
+        }
+      },
+      "next_action": "save_draft"
+    },
+    {
+      "step": 4,
+      "decision": {
+        "action": "save_draft",
+        "arguments": {
+          "slot": "2026-11-01T21:00:00+08:00"
+        },
+        "reason_summary": "Saving draft after material passed review and slot confirmed available"
+      },
+      "tool_result": {
+        "ok": false,
+        "summary": "draft store failure was injected for this run",
+        "data": {},
+        "error_code": "save_failed"
+      },
+      "next_action": "finish"
+    },
+    {
+      "step": 5,
+      "decision": {
+        "action": "finish",
+        "arguments": {
+          "status": "failed",
+          "reason": "Draft save failed due to storage error"
+        },
+        "reason_summary": "Save operation encountered a storage error that cannot be resolved with available actions"
+      },
+      "tool_result": null,
+      "next_action": "end"
+    }
+  ],
+  "final_output": {
+    "task_status": "failed",
+    "material_id": "M05",
+    "review_status": "pass",
+    "risk_reasons": [],
+    "missing_fields": [],
+    "requested_slot": "2026-11-01T21:00:00+08:00",
+    "suggested_slot": "2026-11-01T21:00:00+08:00",
+    "pending_items": [],
+    "draft_save": {
+      "status": "failed",
+      "draft_id": null,
+      "message": "draft store failure was injected for this run",
+      "error_code": "save_failed"
+    },
+    "published": false,
+    "completion_reason": "Draft save failed due to storage error",
+    "steps_used": 5,
+    "step_limit": 8
+  }
+}

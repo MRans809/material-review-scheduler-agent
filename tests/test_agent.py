@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from schedule_agent.agent import ScheduleAgent
-from schedule_agent.decision import MockDecisionModel
+from schedule_agent.decision import DecisionProviderError, MockDecisionModel
 from schedule_agent.models import Action, Decision, RunRequest
 from schedule_agent.tools import ToolRuntime
 
@@ -194,3 +194,35 @@ def test_tool_rejects_unconfirmed_alternative(data_dir: Path) -> None:
 
     assert result.ok is False
     assert result.error_code == "confirmation_required"
+
+
+@dataclass
+class FailAfterSaveModel:
+    name: str = "fail-after-save-test"
+
+    def decide(
+        self,
+        request: RunRequest,
+        observations: list[dict[str, Any]],
+        step: int,
+        max_steps: int,
+    ) -> Decision:
+        if observations and observations[-1]["action"] == "save_draft":
+            raise DecisionProviderError("summary timeout")
+        return MockDecisionModel().decide(request, observations, step, max_steps)
+
+
+def test_confirmed_save_remains_completed_if_final_model_summary_fails(
+    data_dir: Path,
+) -> None:
+    agent = ScheduleAgent(
+        FailAfterSaveModel(),
+        ToolRuntime(data_dir, data_dir / "post-save-error-state.json"),
+    )
+
+    run = agent.run(_request("M01"))
+
+    assert run.output["task_status"] == "completed"
+    assert run.output["draft_save"]["status"] == "saved"
+    assert run.output["completion_reason"].startswith("Draft save was confirmed")
+    assert "summary timeout" in run.output["completion_reason"]

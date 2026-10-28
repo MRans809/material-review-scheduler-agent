@@ -7,7 +7,7 @@
 - 核心循环：`src/schedule_agent/agent.py`
 - 模型决策与离线 Mock：`src/schedule_agent/decision.py`
 - 业务工具和强制边界：`src/schedule_agent/tools.py`
-- 可执行测试：`tests/test_agent.py`
+- 可执行测试：`tests/`
 - 实际输出：`examples/outputs/`
 - 完整 Trace：`examples/traces/`
 - 测试报告：`examples/test-results.xml`
@@ -62,7 +62,7 @@ schedule-agent run `
   --trace-out trace-api.json
 ```
 
-密钥只从环境变量或命令行读取，不应提交 `.env`。当前环境没有模型密钥，因此仓库内的示例 Trace 来自离线 Mock，真实模型入口尚未完成在线效果验证。
+密钥只从环境变量或命令行读取，不应提交 `.env`。仓库同时保留离线 Mock Trace 和 `qwen3.5-plus` 真实模型 Trace；真实记录使用 `api-` 文件名前缀，且不包含密钥。
 
 项目启动时会自动读取仓库根目录的 `.env`，并兼容 DashScope/Qwen 的 `DASHSCOPE_API_KEY`、`QWEN_BASE_URL`、`QWEN_MODEL` 变量名。终端中已经存在的环境变量优先，不会被 `.env` 覆盖。
 
@@ -73,7 +73,7 @@ python -m pytest
 python scripts/generate_examples.py
 ```
 
-当前结果：`12 passed`。示例生成脚本会清理并重建 `examples/state/` 中的合成草稿状态，不修改 `data/` 下的素材、规则和已有排期。
+当前结果：`15 passed`。示例生成脚本只清理并重建 Mock 使用的合成草稿状态，不修改 `data/` 或 `api-` 开头的真实模型验证状态。
 
 ## 已覆盖场景
 

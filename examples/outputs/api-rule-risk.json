@@ -1,0 +1,26 @@
+{
+  "task_status": "blocked",
+  "material_id": "M03",
+  "review_status": "risk",
+  "risk_reasons": [
+    {
+      "code": "PROHIBITED_CLAIM",
+      "message": "prohibited claim detected: 效率提升80%"
+    }
+  ],
+  "missing_fields": [],
+  "requested_slot": "2026-11-01T17:00:00+08:00",
+  "suggested_slot": null,
+  "pending_items": [
+    "manual_risk_review"
+  ],
+  "draft_save": {
+    "status": "not_saved",
+    "draft_id": null,
+    "message": "no draft save was confirmed"
+  },
+  "published": false,
+  "completion_reason": "Material M03 failed review rules: prohibited claim detected (效率提升80%).",
+  "steps_used": 3,
+  "step_limit": 8
+}

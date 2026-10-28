@@ -25,8 +25,12 @@ def main() -> None:
         ("save-failure", "save-failure.json", "failure-state.json"),
     ]
     state_dir = ROOT / "examples" / "state"
-    for state_path in state_dir.glob("*.json"):
-        state_path.unlink()
+    mock_state_names = {state_name for _, _, state_name in cases}
+    mock_state_names.add("duplicate-state.json")
+    for state_name in mock_state_names:
+        state_path = state_dir / state_name
+        if state_path.exists():
+            state_path.unlink()
 
     for output_name, input_name, state_name in cases:
         _run_case(output_name, input_name, state_name)

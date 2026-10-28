@@ -1,0 +1,111 @@
+{
+  "trace_version": "1.0",
+  "run_id": "RUN-DF9E7DDE7FD9",
+  "created_at": "2026-10-28T03:36:12.556828+00:00",
+  "decision_provider": "openai-compatible",
+  "model": "qwen3.5-plus",
+  "mock_boundary": null,
+  "input": {
+    "material_id": "M02",
+    "requested_at": "2026-11-01T17:00:00+08:00",
+    "confirmed_slot": null,
+    "request_id": "REQ-MISSING-001",
+    "simulate_save_failure": false
+  },
+  "max_steps": 8,
+  "events": [
+    {
+      "step": 1,
+      "decision": {
+        "action": "read_material",
+        "arguments": {
+          "material_id": "M02"
+        },
+        "reason_summary": "Starting material review process by reading material M02 content"
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "loaded material M02",
+        "data": {
+          "material": {
+            "material_id": "M02",
+            "title": "用户混剪案例",
+            "duration_seconds": 35,
+            "platform": "小影",
+            "content_tags": [
+              "用户案例"
+            ],
+            "claims": [
+              "展示模板剪辑流程"
+            ]
+          }
+        }
+      },
+      "next_action": "check_rules"
+    },
+    {
+      "step": 2,
+      "decision": {
+        "action": "check_rules",
+        "arguments": {
+          "material_id": "M02"
+        },
+        "reason_summary": "Validating material compliance against publishing rules."
+      },
+      "tool_result": {
+        "ok": true,
+        "summary": "required material metadata is missing",
+        "data": {
+          "review_status": "missing_information",
+          "missing_fields": [
+            "rights_status"
+          ],
+          "risks": [],
+          "rule_version": "2026-10-01"
+        }
+      },
+      "next_action": "finish"
+    },
+    {
+      "step": 3,
+      "decision": {
+        "action": "finish",
+        "arguments": {
+          "status": "blocked",
+          "reason": "Material M02 is missing required metadata field: rights_status. Cannot proceed with draft save until all required fields are provided."
+        },
+        "reason_summary": "Material review blocked due to missing required metadata (rights_status field)."
+      },
+      "tool_result": null,
+      "next_action": "end"
+    }
+  ],
+  "final_output": {
+    "task_status": "blocked",
+    "material_id": "M02",
+    "review_status": "missing_information",
+    "risk_reasons": [
+      {
+        "code": "MISSING_FIELD",
+        "message": "required field is missing: rights_status"
+      }
+    ],
+    "missing_fields": [
+      "rights_status"
+    ],
+    "requested_slot": "2026-11-01T17:00:00+08:00",
+    "suggested_slot": null,
+    "pending_items": [
+      "provide:rights_status"
+    ],
+    "draft_save": {
+      "status": "not_saved",
+      "draft_id": null,
+      "message": "no draft save was confirmed"
+    },
+    "published": false,
+    "completion_reason": "Material M02 is missing required metadata field: rights_status. Cannot proceed with draft save until all required fields are provided.",
+    "steps_used": 3,
+    "step_limit": 8
+  }
+}

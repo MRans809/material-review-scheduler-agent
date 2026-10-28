@@ -151,7 +151,7 @@ class OpenAICompatibleDecisionModel:
     api_key: str
     base_url: str
     model: str
-    timeout_seconds: float = 30.0
+    timeout_seconds: float = 90.0
     name: str = "openai-compatible"
 
     def decide(

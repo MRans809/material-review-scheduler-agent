@@ -1,0 +1,21 @@
+{
+  "task_status": "pending_confirmation",
+  "material_id": "M01",
+  "review_status": "pass",
+  "risk_reasons": [],
+  "missing_fields": [],
+  "requested_slot": "2026-11-01T18:00:00+08:00",
+  "suggested_slot": "2026-11-01T19:00:00+08:00",
+  "pending_items": [
+    "confirm_alternative_slot"
+  ],
+  "draft_save": {
+    "status": "not_saved",
+    "draft_id": null,
+    "message": "no draft save was confirmed"
+  },
+  "published": false,
+  "completion_reason": "Requested slot 2026-11-01T18:00:00+08:00 is occupied by S001. Available alternatives: 2026-11-01T19:00:00+08:00, 2026-11-01T20:00:00+08:00, 2026-11-01T21:00:00+08:00. Please confirm a slot to proceed with draft save.",
+  "steps_used": 4,
+  "step_limit": 8
+}

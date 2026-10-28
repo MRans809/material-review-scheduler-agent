@@ -8,19 +8,21 @@
 python -m pytest --junitxml=examples/test-results.xml
 ```
 
-2026-10-28 本地实际结果：`12 passed in 0.33s`。机器环境为 Python 3.12.4、pytest 7.4.4。机器可读报告位于 `examples/test-results.xml`。
+2026-10-28 本地实际结果：`15 passed`。机器环境为 Python 3.12.4、pytest 7.4.4。机器可读报告位于 `examples/test-results.xml`。
+
+真实模型使用 DashScope OpenAI 兼容接口和 `qwen3.5-plus`，完成 8 次运行，覆盖 7 类业务场景。`api-duplicate-first.json` 与 `api-duplicate-replay.json` 共同验证重复执行，其余场景各一次。密钥仅存在于被 Git 忽略的本地 `.env`，不在输出或 Trace 中。
 
 ## 验收点对应关系
 
 | 验收点 | 实际输出 | Trace | 自动化测试 |
 |---|---|---|---|
-| 正常排期 | `examples/outputs/normal.json` | `examples/traces/normal.json` | `test_normal_schedule_saves_draft_without_publishing` |
-| 素材信息缺失 | `examples/outputs/missing-metadata.json` | `examples/traces/missing-metadata.json` | `test_missing_metadata_blocks_before_slot_query` |
-| 规则风险 | `examples/outputs/rule-risk.json` | `examples/traces/rule-risk.json` | `test_rule_risk_blocks_draft` |
-| 时段冲突 | `examples/outputs/slot-conflict.json` | `examples/traces/slot-conflict.json` | `test_conflict_suggests_alternative_and_waits_for_confirmation` |
-| 确认替代时段 | `examples/outputs/slot-confirmed.json` | `examples/traces/slot-confirmed.json` | `test_confirmed_alternative_is_rechecked_then_saved` |
-| 重复提交 | `examples/outputs/duplicate-replay.json` | `examples/traces/duplicate-replay.json` | `test_duplicate_execution_returns_one_existing_draft` |
-| 保存失败 | `examples/outputs/save-failure.json` | `examples/traces/save-failure.json` | `test_save_failure_is_not_reported_as_success` |
+| 正常排期 | `examples/outputs/api-normal.json` | `examples/traces/api-normal.json` | `test_normal_schedule_saves_draft_without_publishing` |
+| 素材信息缺失 | `examples/outputs/api-missing-metadata.json` | `examples/traces/api-missing-metadata.json` | `test_missing_metadata_blocks_before_slot_query` |
+| 规则风险 | `examples/outputs/api-rule-risk.json` | `examples/traces/api-rule-risk.json` | `test_rule_risk_blocks_draft` |
+| 时段冲突 | `examples/outputs/api-slot-conflict.json` | `examples/traces/api-slot-conflict.json` | `test_conflict_suggests_alternative_and_waits_for_confirmation` |
+| 确认替代时段 | `examples/outputs/api-slot-confirmed.json` | `examples/traces/api-slot-confirmed.json` | `test_confirmed_alternative_is_rechecked_then_saved` |
+| 重复提交 | `examples/outputs/api-duplicate-replay.json` | `examples/traces/api-duplicate-replay.json` | `test_duplicate_execution_returns_one_existing_draft` |
+| 保存失败 | `examples/outputs/api-save-failure.json` | `examples/traces/api-save-failure.json` | `test_save_failure_is_not_reported_as_success` |
 | 步数上限 | 无固定示例文件 | 测试内断言 | `test_step_limit_returns_explicit_incomplete_status` |
 
 ## 两条关键动态路径
@@ -39,7 +41,7 @@ read_material → check_rules → query_slots(18:00 occupied)
 → query_slots(19:00 available) → save_draft → finish(completed)
 ```
 
-测试 `test_changed_tool_observation_changes_next_action` 还会替换排期工具结果：同一个 18:00 请求在有冲突时等待确认，在清空冲突后改为保存草稿，证明下一动作依赖工具观察。
+上述两条动作序列均由真实模型产生。测试 `test_changed_tool_observation_changes_next_action` 还会替换排期工具结果：同一个 18:00 请求在有冲突时等待确认，在清空冲突后改为保存草稿，进一步证明下一动作依赖工具观察。
 
 ## 实际结果摘要
 
@@ -51,10 +53,8 @@ read_material → check_rules → query_slots(18:00 occupied)
 
 ## 失败与限制
 
-1. 当前环境没有模型密钥，仓库中的运行记录来自离线 Mock；因此只能证明流程、工具和边界，不能证明真实模型在未知输入上的决策效果。
-2. API 模式尚未进行在线兼容性测试，不同服务可能不支持 `response_format: json_object`。
+1. 真实模型每个场景只运行一次，尚未统计多次运行的稳定性，也未与其他模型比较。
+2. 当前兼容性结论只适用于本次 DashScope 和 `qwen3.5-plus` 配置；其他服务可能不支持 `response_format: json_object`。
 3. 合成规则只覆盖必填字段、版权状态和少量禁用宣传语，不代表真实内容安全体系。
 4. 草稿存储适用于本地演示，不具备跨进程事务、鉴权和审计防篡改能力。
 5. 替代时段按同日整点向后搜索，未覆盖优先级、素材时长重叠、跨天或多渠道容量。
-
-提交前应使用目标模型至少复跑正常、冲突和风险三条路径，并把真实模型 Trace 单独保存到 `examples/traces/api-*`，不要覆盖 Mock 记录。

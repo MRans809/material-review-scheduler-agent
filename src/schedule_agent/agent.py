@@ -56,7 +56,14 @@ class ScheduleAgent:
                         "error": str(exc),
                     }
                 )
-                terminal_reason = str(exc)
+                save_result = _latest_result(observations, Action.SAVE_DRAFT)
+                if save_result and save_result.get("ok"):
+                    terminal_reason = (
+                        "Draft save was confirmed, but the final model decision failed: "
+                        f"{exc}"
+                    )
+                else:
+                    terminal_reason = str(exc)
                 output = self._build_output(
                     request,
                     observations,
@@ -263,6 +270,7 @@ class ScheduleAgent:
             "run_id": run_id,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "decision_provider": self.decision_provider.name,
+            "model": getattr(self.decision_provider, "model", None),
             "mock_boundary": (
                 "Offline mock validates orchestration only; it does not prove LLM decision quality."
                 if self.decision_provider.name == "offline-mock"
