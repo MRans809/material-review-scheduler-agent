@@ -36,7 +36,7 @@ AI 辅助生成后实际执行：
 
 ```text
 python -m pytest --junitxml=examples/test-results.xml
-10 passed in 0.34s
+12 passed in 0.33s
 ```
 
 还执行了 `python scripts/generate_examples.py`，生成 8 组输出和 8 份 Trace。人工抽查确认：

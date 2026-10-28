@@ -64,6 +64,8 @@ schedule-agent run `
 
 密钥只从环境变量或命令行读取，不应提交 `.env`。当前环境没有模型密钥，因此仓库内的示例 Trace 来自离线 Mock，真实模型入口尚未完成在线效果验证。
 
+项目启动时会自动读取仓库根目录的 `.env`，并兼容 DashScope/Qwen 的 `DASHSCOPE_API_KEY`、`QWEN_BASE_URL`、`QWEN_MODEL` 变量名。终端中已经存在的环境变量优先，不会被 `.env` 覆盖。
+
 ## 测试与复现
 
 ```powershell
@@ -71,7 +73,7 @@ python -m pytest
 python scripts/generate_examples.py
 ```
 
-当前结果：`10 passed`。示例生成脚本会清理并重建 `examples/state/` 中的合成草稿状态，不修改 `data/` 下的素材、规则和已有排期。
+当前结果：`12 passed`。示例生成脚本会清理并重建 `examples/state/` 中的合成草稿状态，不修改 `data/` 下的素材、规则和已有排期。
 
 ## 已覆盖场景
 

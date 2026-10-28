@@ -8,7 +8,7 @@
 python -m pytest --junitxml=examples/test-results.xml
 ```
 
-2026-10-28 本地实际结果：`10 passed in 0.34s`。机器环境为 Python 3.12.4、pytest 7.4.4。机器可读报告位于 `examples/test-results.xml`。
+2026-10-28 本地实际结果：`12 passed in 0.33s`。机器环境为 Python 3.12.4、pytest 7.4.4。机器可读报告位于 `examples/test-results.xml`。
 
 ## 验收点对应关系
 
